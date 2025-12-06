@@ -9,6 +9,16 @@ char emailKontak[100][50];
 char kelompokKontak[100][30];
 int jumlahKontak = 0;
 
+// Fungsi untuk validasi nomor telepon angka saja
+int validasiNomorTelepon(char nohp[]){
+    for(int i = 0; i < strlen(nohp); i++){
+        if(nohp[i] < '0' || nohp[i] > '9'){
+            return 0; // bukan angka
+        }
+    }
+    return 1; // valid angka semua
+}
+
 // Fungsi untuk menambah kontak
 void tambahKontak(){
     if(jumlahKontak >= 100){
@@ -20,14 +30,39 @@ void tambahKontak(){
     printf("Nama: ");
     scanf(" %[^\n]", namaKontak[jumlahKontak]);
     
+    // Input nomor telepon + validasi angka
     printf("Nomor Telepon: ");
     scanf(" %[^\n]", nomorTelepon[jumlahKontak]);
-    
-    printf("Email: ");
+
+    if(!validasiNomorTelepon(nomorTelepon[jumlahKontak])){
+        printf("Nomor telepon hanya boleh berisi angka!\n");
+        printf("Data gagal ditambahkan!\n");
+        return;
+    }
+
+    // Validasi Email
+    printf("Email (....@gmail.com): ");
     scanf(" %[^\n]", emailKontak[jumlahKontak]);
     
+    if(strstr(emailKontak[jumlahKontak], "@gmail.com") == NULL){
+        printf("Email harus menggunakan @gmail.com\n");
+        printf("Data gagal ditambahkan!\n");
+        return;
+    }
+
+    // Validasi Kelompok
     printf("Kelompok (Keluarga/Teman/Kerja/Lainnya): ");
     scanf(" %[^\n]", kelompokKontak[jumlahKontak]);
+
+    if(strcmp(kelompokKontak[jumlahKontak], "Keluarga") != 0 &&
+       strcmp(kelompokKontak[jumlahKontak], "Teman") != 0 &&
+       strcmp(kelompokKontak[jumlahKontak], "Kerja") != 0 &&
+       strcmp(kelompokKontak[jumlahKontak], "Lainnya") != 0){
+        
+        printf("Kelompok harus sesuai pilihan: Keluarga / Teman / Kerja / Lainnya\n");
+        printf("Data gagal ditambahkan!\n");
+        return;
+    }
     
     jumlahKontak++;
     printf("\nKontak berhasil ditambahkan!\n");
@@ -53,7 +88,7 @@ void tampilkanSemuaKontak(){
     printf("\nTotal: %d kontak\n", jumlahKontak);
 }
 
-// Fungsi untuk mencari kontak
+// Fungsi mencari kontak
 void cariKontak(){
     printf("\n=== CARI KONTAK ===\n");
     
@@ -79,12 +114,12 @@ void cariKontak(){
         }
     }
     
-    if(ditemukan == 0){
+    if(!ditemukan){
         printf("Tidak ada kontak yang cocok.\n");
     }
 }
 
-// Fungsi untuk mengedit kontak
+// Fungsi edit kontak
 void editKontak(){
     printf("\n=== EDIT KONTAK ===\n");
     
@@ -107,20 +142,39 @@ void editKontak(){
     
     printf("Nama Baru: ");
     scanf(" %[^\n]", namaKontak[index]);
-    
+
     printf("Nomor Telepon Baru: ");
     scanf(" %[^\n]", nomorTelepon[index]);
+
+    if(!validasiNomorTelepon(nomorTelepon[index])){
+        printf("Nomor telepon tidak valid! Edit dibatalkan.\n");
+        return;
+    }
     
-    printf("Email Baru: ");
+    printf("Email Baru (@gmail.com): ");
     scanf(" %[^\n]", emailKontak[index]);
-    
-    printf("Kelompok Baru: ");
+
+    if(strstr(emailKontak[index], "@gmail.com") == NULL){
+        printf("Email tidak valid! Edit dibatalkan.\n");
+        return;
+    }
+
+    printf("Kelompok Baru (Keluarga/Teman/Kerja/Lainnya): ");
     scanf(" %[^\n]", kelompokKontak[index]);
+
+    if(strcmp(kelompokKontak[index], "Keluarga") != 0 &&
+       strcmp(kelompokKontak[index], "Teman") != 0 &&
+       strcmp(kelompokKontak[index], "Kerja") != 0 &&
+       strcmp(kelompokKontak[index], "Lainnya") != 0){
+        
+        printf("Kelompok tidak valid! Edit dibatalkan.\n");
+        return;
+    }
     
     printf("\nKontak berhasil diupdate!\n");
 }
 
-// Fungsi untuk menghapus kontak
+// Fungsi hapus kontak
 void hapusKontak(){
     printf("\n=== HAPUS KONTAK ===\n");
     
@@ -145,7 +199,6 @@ void hapusKontak(){
     scanf(" %c", &konfirmasi);
     
     if(konfirmasi == 'y' || konfirmasi == 'Y'){
-        // Geser semua data ke kiri
         for(int i = index; i < jumlahKontak - 1; i++){
             strcpy(namaKontak[i], namaKontak[i + 1]);
             strcpy(nomorTelepon[i], nomorTelepon[i + 1]);
@@ -159,10 +212,9 @@ void hapusKontak(){
     }
 }
 
-// Fungsi untuk menyimpan ke file
+// Fungsi simpan ke file
 void simpanKeFile(){
-    FILE *file;
-    file = fopen("data_kontak.txt", "w");
+    FILE *file = fopen("data_kontak.txt", "w");
     
     if(file == NULL){
         printf("Gagal membuka file!\n");
@@ -182,10 +234,9 @@ void simpanKeFile(){
     printf("Data berhasil disimpan ke file!\n");
 }
 
-// Fungsi untuk membaca dari file
+// Load data dari file
 void bacaDariFile(){
-    FILE *file;
-    file = fopen("data_kontak.txt", "r");
+    FILE *file = fopen("data_kontak.txt", "r");
     
     if(file == NULL){
         printf("File data tidak ditemukan. Membuat database baru.\n");
@@ -212,55 +263,26 @@ void bacaDariFile(){
     printf("Data berhasil dimuat dari file! (%d kontak)\n", jumlahKontak);
 }
 
-// Fungsi untuk menampilkan statistik
-void tampilkanStatistik(){
-    printf("\n=== STATISTIK KONTAK ===\n");
-    printf("Total Kontak: %d\n", jumlahKontak);
-    
-    if(jumlahKontak == 0){
-        printf("Tidak ada data untuk dianalisis.\n");
-        return;
-    }
-    
-    int keluarga = 0, teman = 0, kerja = 0, lainnya = 0;
-    
-    for(int i = 0; i < jumlahKontak; i++){
-        if(strstr(kelompokKontak[i], "Keluarga") != NULL){
-            keluarga++;
-        } else if(strstr(kelompokKontak[i], "Teman") != NULL){
-            teman++;
-        } else if(strstr(kelompokKontak[i], "Kerja") != NULL){
-            kerja++;
-        } else {
-            lainnya++;
-        }
-    }
-    
-    printf("Keluarga: %d\n", keluarga);
-    printf("Teman: %d\n", teman);
-    printf("Kerja: %d\n", kerja);
-    printf("Lainnya: %d\n", lainnya);
-}
-
-// Fungsi untuk export ke file teks
+// Export file teks
 void exportKeFileTeks(){
-    if(jumlahKontak == 0){
-        printf("Tidak ada data untuk di-export.\n");
-        return;
-    }
-    
-    FILE *file;
-    file = fopen("export_kontak.txt", "w");
-    
+    FILE *file = fopen("export_kontak.txt", "w");
+
     if(file == NULL){
         printf("Gagal membuat file!\n");
         return;
     }
-    
+
+    if(jumlahKontak == 0){
+        fprintf(file, "DAFTAR KONTAK\n=============\nTotal: 0 kontak\n\n");
+        fclose(file);
+        printf("File export kosong berhasil dibuat (0 kontak)\n");
+        return;
+    }
+
     fprintf(file, "DAFTAR KONTAK\n");
     fprintf(file, "=============\n");
     fprintf(file, "Total: %d kontak\n\n", jumlahKontak);
-    
+
     for(int i = 0; i < jumlahKontak; i++){
         fprintf(file, "Kontak #%d\n", i+1);
         fprintf(file, "Nama: %s\n", namaKontak[i]);
@@ -269,12 +291,13 @@ void exportKeFileTeks(){
         fprintf(file, "Kelompok: %s\n", kelompokKontak[i]);
         fprintf(file, "------------------------\n");
     }
-    
+
     fclose(file);
     printf("Data berhasil di-export ke 'export_kontak.txt'\n");
 }
 
-// Fungsi untuk deteksi duplikat
+
+// Deteksi duplikat
 void deteksiDuplikat(){
     printf("\n=== DETEKSI DUPLIKAT ===\n");
     
@@ -303,7 +326,7 @@ void deteksiDuplikat(){
     }
 }
 
-// Fungsi menu utama
+// Menu utama
 int tampilkanMenu(){
     int pilihan;
     printf("\n=== BUKU TELEPON DIGITAL ===\n");
@@ -313,12 +336,10 @@ int tampilkanMenu(){
     printf("4. Edit Kontak\n");
     printf("5. Hapus Kontak\n");
     printf("6. Simpan Data ke File\n");
-    printf("7. Load Data dari File\n");
-    printf("8. Tampilkan Statistik\n");
-    printf("9. Export ke File Teks\n");
-    printf("10. Deteksi Duplikat\n");
+    printf("7. Export ke File Teks\n");
+    printf("8. Deteksi Duplikat\n");
     printf("0. Keluar\n");
-    printf("Pilih menu (0-10): ");
+    printf("Pilih menu (0-8): ");
     scanf("%d", &pilihan);
     return pilihan;
 }
@@ -349,21 +370,16 @@ int main(){
         } else if(pilihan == 6){
             simpanKeFile();
         } else if(pilihan == 7){
-            bacaDariFile();
-        } else if(pilihan == 8){
-            tampilkanStatistik();
-        } else if(pilihan == 9){
             exportKeFileTeks();
-        } else if(pilihan == 10){
+        } else if(pilihan == 8){
             deteksiDuplikat();
         } else if(pilihan == 0){
-            printf("\nMenyimpan data sebelum keluar...\n");
-            simpanKeFile();
+            printf("\nKeluar tanpa menyimpan otomatis.\n");
             printf("Terima kasih telah menggunakan Sistem Manajemen Kontak!\n");
             printf("=========================================\n");
             break;
         } else {
-            printf("Pilihan tidak valid! Silakan pilih 0-10.\n");
+            printf("Pilihan tidak valid! Silakan pilih 0-8.\n");
         }
         
         printf("\nTekan Enter untuk melanjutkan...");
