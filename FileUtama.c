@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-// Array untuk menyimpan data kontak
 char namaKontak[100][50];
 char nomorTelepon[100][15];
 char emailKontak[100][50];
@@ -389,3 +388,4 @@ int main(){
     
     return 0;
 }
+
