@@ -12,7 +12,7 @@ int jumlahKontak = 0;
 int validasiNomorTelepon(char nohp[]){
     for(int i = 0; i < strlen(nohp); i++){
         if(nohp[i] < '0' || nohp[i] > '9'){
-            return 0; // bukan angka
+            return 0; 
         }
     }
     return 1; // valid angka semua
@@ -388,4 +388,5 @@ int main(){
     
     return 0;
 }
+
 
