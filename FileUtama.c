@@ -8,17 +8,16 @@ char emailKontak[100][50];
 char kelompokKontak[100][30];
 int jumlahKontak = 0;
 
-// Fungsi untuk validasi nomor telepon angka saja
 int validasiNomorTelepon(char nohp[]){
     for(int i = 0; i < strlen(nohp); i++){
         if(nohp[i] < '0' || nohp[i] > '9'){
             return 0; 
         }
     }
-    return 1; // valid angka semua
+    return 1; 
 }
 
-// Fungsi untuk menambah kontak
+
 void tambahKontak(){
     if(jumlahKontak >= 100){
         printf("Database kontak penuh!\n");
@@ -29,7 +28,6 @@ void tambahKontak(){
     printf("Nama: ");
     scanf(" %[^\n]", namaKontak[jumlahKontak]);
     
-    // Input nomor telepon + validasi angka
     printf("Nomor Telepon: ");
     scanf(" %[^\n]", nomorTelepon[jumlahKontak]);
 
@@ -39,7 +37,6 @@ void tambahKontak(){
         return;
     }
 
-    // Validasi Email
     printf("Email (....@gmail.com): ");
     scanf(" %[^\n]", emailKontak[jumlahKontak]);
     
@@ -49,7 +46,6 @@ void tambahKontak(){
         return;
     }
 
-    // Validasi Kelompok
     printf("Kelompok (Keluarga/Teman/Kerja/Lainnya): ");
     scanf(" %[^\n]", kelompokKontak[jumlahKontak]);
 
@@ -67,7 +63,6 @@ void tambahKontak(){
     printf("\nKontak berhasil ditambahkan!\n");
 }
 
-// Fungsi untuk menampilkan semua kontak
 void tampilkanSemuaKontak(){
     printf("\n=== DAFTAR SEMUA KONTAK ===\n");
     
@@ -87,7 +82,6 @@ void tampilkanSemuaKontak(){
     printf("\nTotal: %d kontak\n", jumlahKontak);
 }
 
-// Fungsi mencari kontak
 void cariKontak(){
     printf("\n=== CARI KONTAK ===\n");
     
@@ -118,7 +112,6 @@ void cariKontak(){
     }
 }
 
-// Fungsi edit kontak
 void editKontak(){
     printf("\n=== EDIT KONTAK ===\n");
     
@@ -173,7 +166,6 @@ void editKontak(){
     printf("\nKontak berhasil diupdate!\n");
 }
 
-// Fungsi hapus kontak
 void hapusKontak(){
     printf("\n=== HAPUS KONTAK ===\n");
     
@@ -211,7 +203,6 @@ void hapusKontak(){
     }
 }
 
-// Fungsi simpan ke file
 void simpanKeFile(){
     FILE *file = fopen("data_kontak.txt", "w");
     
@@ -233,7 +224,6 @@ void simpanKeFile(){
     printf("Data berhasil disimpan ke file!\n");
 }
 
-// Load data dari file
 void bacaDariFile(){
     FILE *file = fopen("data_kontak.txt", "r");
     
@@ -262,7 +252,6 @@ void bacaDariFile(){
     printf("Data berhasil dimuat dari file! (%d kontak)\n", jumlahKontak);
 }
 
-// Export file teks
 void exportKeFileTeks(){
     FILE *file = fopen("export_kontak.txt", "w");
 
@@ -296,7 +285,6 @@ void exportKeFileTeks(){
 }
 
 
-// Deteksi duplikat
 void deteksiDuplikat(){
     printf("\n=== DETEKSI DUPLIKAT ===\n");
     
@@ -387,6 +375,7 @@ int main(){
     
     return 0;
 }
+
 
 
 
