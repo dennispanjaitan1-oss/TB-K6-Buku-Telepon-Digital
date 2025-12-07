@@ -325,7 +325,6 @@ void deteksiDuplikat(){
     }
 }
 
-// Menu utama
 int tampilkanMenu(){
     int pilihan;
     printf("\n=== BUKU TELEPON DIGITAL ===\n");
@@ -388,6 +387,7 @@ int main(){
     
     return 0;
 }
+
 
 
 
