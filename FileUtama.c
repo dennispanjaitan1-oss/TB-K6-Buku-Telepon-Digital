@@ -96,13 +96,13 @@ void cariKontak(){
         return;
     }
     
-    char keyword[50];
+    char katakunci[50];
     printf("Masukkan nama yang dicari: ");
-    scanf(" %[^\n]", keyword);
+    scanf(" %[^\n]", katakunci);
     
     int ditemukan = 0;
     for(int i = 0; i < jumlahKontak; i++){
-        if(strstr(namaKontak[i], keyword) != NULL){
+        if(strstr(namaKontak[i], katakunci) != NULL){
             printf("\nKontak ditemukan:\n");
             printf("ID: %d\n", i+1);
             printf("Nama: %s\n", namaKontak[i]);
@@ -387,6 +387,7 @@ int main(){
     
     return 0;
 }
+
 
 
 
