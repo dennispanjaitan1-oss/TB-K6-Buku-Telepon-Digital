@@ -343,7 +343,7 @@ int tampilkanMenu(){
     return pilihan;
 }
 
-// Fungsi main
+
 int main(){
     printf("=========================================\n");
     printf("    SISTEM MANAJEMEN KONTAK v1.0\n");
@@ -388,5 +388,6 @@ int main(){
     
     return 0;
 }
+
 
 
