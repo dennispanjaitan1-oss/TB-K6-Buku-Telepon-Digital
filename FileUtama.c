@@ -398,7 +398,107 @@ void editKontak(){
                 sprintf(log, "Edit kontak: %s -> kelompok menjadi %s", namaKontak[index], kelompokKontak[index]);
                 tambahRiwayat(log);
                 printf("\nKelompok berhasil diubah.\n");
+                break;
+            }
+        } else if(pilihan == 5){
+            printf("\nSelesai mengedit kontak.\n");
+            tekanEnter();
+            return;
+        } else {
+            printf("\nPilihan tidak valid! Silakan pilih 1-5.\n");
+        }
+    }
+}
 
+void hapusKontak(){
+    tampilkanHeader("HAPUS KONTAK");
+    
+    if(jumlahKontak == 0){
+        printf("\nTidak ada kontak yang bisa dihapus.\n");
+        tekanEnter();
+        return;
+    }
+    
+    int id;
+    while(1){
+        printf("\nMasukkan ID kontak yang akan dihapus (1-%d): ", jumlahKontak);
+        if(scanf("%d", &id) != 1){
+            bersihkanBuffer();
+            printf("Input tidak valid! Masukkan angka ID.\n");
+            continue;
+        }
+        bersihkanBuffer();
+        if(id < 1 || id > jumlahKontak){
+            printf("ID tidak valid! Silakan coba lagi.\n");
+            continue;
+        }
+        break;
+    }
+    
+    int index = id - 1;
+    
+    printf("\n");
+    cetakGarisTipis();
+    char konfirmasiMsg[100];
+    sprintf(konfirmasiMsg, "Hapus kontak: %s?", namaKontak[index]);
+    cetakTengah(konfirmasiMsg);
+    cetakGarisTipis();
+    
+    char konfirmasi;
+    while(1){
+        printf("Konfirmasi (y/n): ");
+        scanf(" %c", &konfirmasi);
+        bersihkanBuffer();
+        if(konfirmasi == 'y' || konfirmasi == 'Y' || konfirmasi == 'n' || konfirmasi == 'N'){
+            break;
+        }
+        printf("Pilihan tidak valid! Masukkan 'y' atau 'n'.\n");
+    }
+    
+    if(konfirmasi == 'y' || konfirmasi == 'Y'){
+        char log[100];
+        sprintf(log, "Hapus kontak: %s", namaKontak[index]);
+        tambahRiwayat(log);
+        
+        for(int i = index; i < jumlahKontak - 1; i++){
+            strcpy(namaKontak[i], namaKontak[i + 1]);
+            strcpy(nomorTelepon[i], nomorTelepon[i + 1]);
+            strcpy(emailKontak[i], emailKontak[i + 1]);
+            strcpy(kelompokKontak[i], kelompokKontak[i + 1]);
+            favoritKontak[i] = favoritKontak[i + 1];
+        }
+        jumlahKontak--;
+        printf("\nKontak berhasil dihapus!\n");
+    } else {
+        printf("\nPenghapusan dibatalkan.\n");
+    }
+    
+    tekanEnter();
+}
+
+void tandaiFavorit(){
+    tampilkanHeader("KELOLA FAVORIT");
+    
+    if(jumlahKontak == 0){
+        printf("\nTidak ada kontak yang tersedia.\n");
+        tekanEnter();
+        return;
+    }
+    
+    int id;
+    while(1){
+        printf("\nMasukkan ID kontak (1-%d): ", jumlahKontak);
+        if(scanf("%d", &id) != 1){
+            bersihkanBuffer();
+            printf("Input tidak valid! Masukkan angka ID.\n");
+            continue;
+        }
+        bersihkanBuffer();
+        if(id < 1 || id > jumlahKontak){
+            printf("ID tidak valid! Silakan coba lagi.\n");
+            continue;
+        }
+             
 
             
             printf("ID: %d\n", i+1);
@@ -678,6 +778,7 @@ int main(){
     
     return 0;
 }
+
 
 
 
