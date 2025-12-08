@@ -24,12 +24,14 @@ void cetakGaris(){
     printf("\n");
 }
 
+
 void cetakGarisTipis(){
     for(int i = 0; i < LEBAR; i++){
         printf("-");
     }
     printf("\n");
 }
+
 
 void cetakTengah(const char *teks){
     int panjang = strlen(teks);
@@ -40,12 +42,14 @@ void cetakTengah(const char *teks){
     printf("%s\n", teks);
 }
 
+
 void tampilkanHeader(const char *judul){
     printf("\n");
     cetakGaris();
     cetakTengah(judul);
     cetakGaris();
 }
+
 
 void tampilkanFooter(){
     int jumlahFavorit = 0;
@@ -62,6 +66,7 @@ void tampilkanFooter(){
     cetakTengah(info);
     cetakGaris();
 }
+
 
 void tambahRiwayat(char aksi[]){
     if(jumlahRiwayat >= 500){
@@ -99,6 +104,7 @@ int validasiNama(char nama[]){
     return 1;
 }
 
+
 void tekanEnter(){
     printf("\nKlik Enter yaa untuk kembali");
     while(getchar() != '\n');
@@ -123,6 +129,7 @@ void tambahKontak(){
         tekanEnter();
         return;
     }
+
     
     tampilkanHeader("TAMBAH KONTAK BARU");
     
@@ -136,6 +143,7 @@ void tambahKontak(){
         }
         break;
     }
+
     
     while(1){
         printf("Nomor Telepon: ");
@@ -148,6 +156,7 @@ void tambahKontak(){
         break;
     }
 
+    
     while(1){
         printf("Email : ");
         scanf(" %[^\n]", emailKontak[jumlahKontak]);
@@ -159,6 +168,7 @@ void tambahKontak(){
         break;
     }
 
+    
     while(1){
         printf("Kelompok (Keluarga/Teman/Kerja/Lainnya): ");
         scanf(" %[^\n]", kelompokKontak[jumlahKontak]);
@@ -184,6 +194,7 @@ void tambahKontak(){
     printf("\nWihh, Kontak berhasil ditambahkan!\n");
     tekanEnter();
 }
+
 
 void tampilkanSemuaKontak(){
     tampilkanHeader("DAFTAR SEMUA KONTAK");
@@ -411,6 +422,7 @@ void editKontak(){
     }
 }
 
+
 void hapusKontak(){
     tampilkanHeader("HAPUS KONTAK");
     
@@ -557,6 +569,7 @@ void tampilkanFavorit(){
             adaFavorit = 1;
         }
     }
+
     
     if(!adaFavorit){
         printf("\nBelum ada kontak favorit.\n");
@@ -626,6 +639,7 @@ void urutkanKontak(){
         tekanEnter();
         return;
     }
+
     
     int pilihan;
     while(1){
@@ -813,6 +827,7 @@ void bacaDariFile(){
     }
 }
 
+
 void exportKeFileTeks(){
     FILE *file = fopen("export_kontak.txt", "w");
 
@@ -930,6 +945,7 @@ int main(){
     bacaDariFile();
     
     int pilihan;
+
     
     while(1){
         pilihan = tampilkanMenu();
@@ -976,6 +992,11 @@ int main(){
     
     return 0;
 }
+
+
+
+
+
 
 
 
