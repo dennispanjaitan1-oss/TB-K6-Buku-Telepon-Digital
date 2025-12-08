@@ -98,7 +98,106 @@ int validasiNama(char nama[]){
     return 1;
 }
 
+void tekanEnter(){
+    printf("\nTekan Enter untuk melanjutkan...");
+    while(getchar() != '\n');
+}
 
+void bersihkanBuffer(){
+    while(getchar() != '\n');
+}
+
+void toLowerStr(const char *src, char *dst){
+    int i;
+    for(i = 0; src[i] != '\0' && i < 100; i++){
+        dst[i] = tolower((unsigned char)src[i]);
+    }
+    dst[i] = '\0';
+}
+
+void tambahKontak(){
+    if(jumlahKontak >= 100){
+        tampilkanHeader("TAMBAH KONTAK BARU");
+        printf("\nDatabase kontak penuh!\n");
+        tekanEnter();
+        return;
+    }
+    
+    tampilkanHeader("TAMBAH KONTAK BARU");
+    
+    while(1){
+        printf("\nNama: ");
+        scanf(" %[^\n]", namaKontak[jumlahKontak]);
+        bersihkanBuffer();
+        if(!validasiNama(namaKontak[jumlahKontak])){
+            printf("Nama hanya boleh berisi huruf dan spasi. Silakan coba lagi.\n");
+            continue;
+        }
+        break;
+    }
+    
+    while(1){
+        printf("Nomor Telepon: ");
+        scanf(" %[^\n]", nomorTelepon[jumlahKontak]);
+        bersihkanBuffer();
+        if(!validasiNomorTelepon(nomorTelepon[jumlahKontak])){
+            printf("Nomor telepon hanya boleh berisi angka! Silakan coba lagi.\n");
+            continue;
+        }
+        break;
+    }
+
+    while(1){
+        printf("Email (....@gmail.com): ");
+        scanf(" %[^\n]", emailKontak[jumlahKontak]);
+        bersihkanBuffer();
+        if(strstr(emailKontak[jumlahKontak], "@gmail.com") == NULL){
+            printf("Email harus menggunakan @gmail.com. Silakan coba lagi.\n");
+            continue;
+        }
+        break;
+    }
+
+    while(1){
+        printf("Kelompok (Keluarga/Teman/Kerja/Lainnya): ");
+        scanf(" %[^\n]", kelompokKontak[jumlahKontak]);
+        bersihkanBuffer();
+        if(strcmp(kelompokKontak[jumlahKontak], "Keluarga") != 0 &&
+           strcmp(kelompokKontak[jumlahKontak], "Teman") != 0 &&
+           strcmp(kelompokKontak[jumlahKontak], "Kerja") != 0 &&
+           strcmp(kelompokKontak[jumlahKontak], "Lainnya") != 0){
+            
+            printf("Kelompok harus sesuai pilihan! Silakan coba lagi.\n");
+            continue;
+        }
+        break;
+    }
+    
+    favoritKontak[jumlahKontak] = 0;
+    jumlahKontak++;
+    
+    char log[100];
+    sprintf(log, "Tambah kontak: %s", namaKontak[jumlahKontak-1]);
+    tambahRiwayat(log);
+    
+    printf("\nKontak berhasil ditambahkan!\n");
+    tekanEnter();
+}
+
+void tampilkanSemuaKontak(){
+    tampilkanHeader("DAFTAR SEMUA KONTAK");
+    
+    if(jumlahKontak == 0){
+        printf("\nTidak ada kontak yang tersimpan.\n");
+        tekanEnter();
+        return;
+    }
+    
+    for(int i = 0; i < jumlahKontak; i++){
+        printf("\n");
+        cetakGarisTipis();
+        char header[100];
+        sprintf(header, "Kontak #%d", i+1);
 
 
 
@@ -381,6 +480,7 @@ int main(){
     
     return 0;
 }
+
 
 
 
