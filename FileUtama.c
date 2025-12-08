@@ -742,14 +742,15 @@ void simpanKeFile(){
         return;
     }
     
-    fprintf(file, "%d\n", jumlahKontak);
+    fprintf(file, "Jumlah Kontak    : %d\n", jumlahKontak);
     
     for(int i = 0; i < jumlahKontak; i++){
-        fprintf(file, "%s\n", namaKontak[i]);
-        fprintf(file, "%s\n", nomorTelepon[i]);
-        fprintf(file, "%s\n", emailKontak[i]);
-        fprintf(file, "%s\n", kelompokKontak[i]);
-        fprintf(file, "%d\n", favoritKontak[i]);
+        fprintf(file, "Nama             : %s\n", namaKontak[i]);
+        fprintf(file, "Nomor Telepon    : %s\n", nomorTelepon[i]);
+        fprintf(file, "Email            : %s\n", emailKontak[i]);
+        fprintf(file, "Kelompok         : %s\n", kelompokKontak[i]);
+        fprintf(file, "Favorit          : %d\n", favoritKontak[i]);
+        fprintf(file, "\n");
     }
     
     fclose(file);
@@ -972,6 +973,7 @@ int main(){
     
     return 0;
 }
+
 
 
 
