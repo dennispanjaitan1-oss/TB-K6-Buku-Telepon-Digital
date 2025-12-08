@@ -498,7 +498,106 @@ void tandaiFavorit(){
             printf("ID tidak valid! Silakan coba lagi.\n");
             continue;
         }
-             
+        break;
+    }
+    
+    int index = id - 1;
+    
+    if(favoritKontak[index] == 0){
+        favoritKontak[index] = 1;
+        printf("\nKontak '%s' ditandai sebagai favorit!\n", namaKontak[index]);
+        
+        char log[100];
+        sprintf(log, "Tandai favorit: %s", namaKontak[index]);
+        tambahRiwayat(log);
+    } else {
+        char konfirmasi;
+        while(1){
+            printf("\nKontak '%s' sudah favorit. Hapus dari favorit? (y/n): ", namaKontak[index]);
+            scanf(" %c", &konfirmasi);
+            bersihkanBuffer();
+            if(konfirmasi == 'y' || konfirmasi == 'Y' || konfirmasi == 'n' || konfirmasi == 'N'){
+                break;
+            }
+            printf("Pilihan tidak valid! Masukkan 'y' atau 'n'.\n");
+        }
+        if(konfirmasi == 'y' || konfirmasi == 'Y'){
+            favoritKontak[index] = 0;
+            printf("\nKontak '%s' dihapus dari favorit!\n", namaKontak[index]);
+            char log[100];
+            sprintf(log, "Hapus favorit: %s", namaKontak[index]);
+            tambahRiwayat(log);
+        } else {
+            printf("\nOperasi batal. Kontak tetap favorit.\n");
+        }
+    }
+    
+    tekanEnter();
+}
+
+void tampilkanFavorit(){
+    tampilkanHeader("KONTAK FAVORIT");
+    
+    int adaFavorit = 0;
+    
+    for(int i = 0; i < jumlahKontak; i++){
+        if(favoritKontak[i] == 1){
+            printf("\n");
+            cetakGarisTipis();
+            char header[100];
+            sprintf(header, "Kontak #%d", i+1);
+            cetakTengah(header);
+            cetakGarisTipis();
+            printf("  Nama      : %s\n", namaKontak[i]);
+            printf("  Telepon   : %s\n", nomorTelepon[i]);
+            printf("  Email     : %s\n", emailKontak[i]);
+            printf("  Kelompok  : %s\n", kelompokKontak[i]);
+            adaFavorit = 1;
+        }
+    }
+    
+    if(!adaFavorit){
+        printf("\nBelum ada kontak favorit.\n");
+    }
+    
+    tekanEnter();
+}
+
+void statistikKontak(){
+    tampilkanHeader("STATISTIK KONTAK");
+    
+    if(jumlahKontak == 0){
+        printf("\nTidak ada data untuk ditampilkan.\n");
+        tekanEnter();
+        return;
+    }
+    
+    int jumlahKeluarga = 0;
+    int jumlahTeman = 0;
+    int jumlahKerja = 0;
+    int jumlahLainnya = 0;
+    int jumlahFavorit = 0;
+    
+    for(int i = 0; i < jumlahKontak; i++){
+        if(strcmp(kelompokKontak[i], "Keluarga") == 0){
+            jumlahKeluarga++;
+        } else if(strcmp(kelompokKontak[i], "Teman") == 0){
+            jumlahTeman++;
+        } else if(strcmp(kelompokKontak[i], "Kerja") == 0){
+            jumlahKerja++;
+        } else if(strcmp(kelompokKontak[i], "Lainnya") == 0){
+            jumlahLainnya++;
+        }
+        
+        if(favoritKontak[i] == 1){
+            jumlahFavorit++;
+        }
+    }
+    
+    printf("\n");
+    char total[50];
+    sprintf(total, "Total Kontak: %d", jumlahKontak);
+    cetakTengah(total);   
 
             
             printf("ID: %d\n", i+1);
@@ -778,6 +877,7 @@ int main(){
     
     return 0;
 }
+
 
 
 
