@@ -99,7 +99,7 @@ int validasiNama(char nama[]){
 }
 
 void tekanEnter(){
-    printf("\nTekan Enter untuk melanjutkan...");
+    printf("\nKlik Enter untuk melanjutkan");
     while(getchar() != '\n');
 }
 
@@ -118,7 +118,7 @@ void toLowerStr(const char *src, char *dst){
 void tambahKontak(){
     if(jumlahKontak >= 100){
         tampilkanHeader("TAMBAH KONTAK BARU");
-        printf("\nDatabase kontak penuh!\n");
+        printf("\nYahh Database kontak penuh!\n");
         tekanEnter();
         return;
     }
@@ -130,7 +130,7 @@ void tambahKontak(){
         scanf(" %[^\n]", namaKontak[jumlahKontak]);
         bersihkanBuffer();
         if(!validasiNama(namaKontak[jumlahKontak])){
-            printf("Nama hanya boleh berisi huruf dan spasi. Silakan coba lagi.\n");
+            printf("Nama hanya boleh berisi huruf dan spasi yaa, Silakan coba lagi.\n");
             continue;
         }
         break;
@@ -141,18 +141,18 @@ void tambahKontak(){
         scanf(" %[^\n]", nomorTelepon[jumlahKontak]);
         bersihkanBuffer();
         if(!validasiNomorTelepon(nomorTelepon[jumlahKontak])){
-            printf("Nomor telepon hanya boleh berisi angka! Silakan coba lagi.\n");
+            printf("Nomor telepon hanya boleh berisi angka yaa, Silakan coba lagi.\n");
             continue;
         }
         break;
     }
 
     while(1){
-        printf("Email (....@gmail.com): ");
+        printf("Email : ");
         scanf(" %[^\n]", emailKontak[jumlahKontak]);
         bersihkanBuffer();
         if(strstr(emailKontak[jumlahKontak], "@gmail.com") == NULL){
-            printf("Email harus menggunakan @gmail.com. Silakan coba lagi.\n");
+            printf("Email harus menggunakan @gmail.com yaa, Silakan coba lagi.\n");
             continue;
         }
         break;
@@ -167,7 +167,7 @@ void tambahKontak(){
            strcmp(kelompokKontak[jumlahKontak], "Kerja") != 0 &&
            strcmp(kelompokKontak[jumlahKontak], "Lainnya") != 0){
             
-            printf("Kelompok harus sesuai pilihan! Silakan coba lagi.\n");
+            printf("Kelompok harus sesuai pilihan yaa, Silakan coba lagi.\n");
             continue;
         }
         break;
@@ -180,7 +180,7 @@ void tambahKontak(){
     sprintf(log, "Tambah kontak: %s", namaKontak[jumlahKontak-1]);
     tambahRiwayat(log);
     
-    printf("\nKontak berhasil ditambahkan!\n");
+    printf("\nWihh, Kontak berhasil ditambahkan!\n");
     tekanEnter();
 }
 
@@ -188,7 +188,7 @@ void tampilkanSemuaKontak(){
     tampilkanHeader("DAFTAR SEMUA KONTAK");
     
     if(jumlahKontak == 0){
-        printf("\nTidak ada kontak yang tersimpan.\n");
+        printf("\nYahh, Tidak ada kontak yang tersimpan.\n");
         tekanEnter();
         return;
     }
@@ -218,21 +218,21 @@ void cariKontak(){
     tampilkanHeader("CARI KONTAK");
     
     if(jumlahKontak == 0){
-        printf("\nTidak ada kontak yang bisa dicari.\n");
+        printf("\nYahh, Tidak ada kontak yang bisa dicari.\n");
         tekanEnter();
         return;
     }
     
     while(1){
         char katakunci[50];
-        printf("\nMasukkan nama yang dicari: ");
+        printf("\nTolong masukin nama yang mau dicari yaa: ");
         if(fgets(katakunci, sizeof(katakunci), stdin) == NULL){
             continue;
         }
         katakunci[strcspn(katakunci, "\n")] = 0;
         
         if(strlen(katakunci) == 0){
-            printf("Nama tidak boleh kosong. Silakan coba lagi.\n");
+            printf("Nama tidak boleh kosong yaa, Silakan coba lagi.\n");
             continue;
         }
         
@@ -266,8 +266,8 @@ void cariKontak(){
         }
         
         if(!ditemukan){
-            printf("\nTidak ada kontak yang cocok dengan '%s'.\n", katakunci);
-            printf("Cari lagi? (y/n): ");
+            printf("\nYahh, ngga ada kontak yang cocok dengan '%s'.\n", katakunci);
+            printf("Mau cari lagi? (y/n): ");
             char pilihan[10];
             if(fgets(pilihan, sizeof(pilihan), stdin) == NULL){
                 return;
@@ -288,22 +288,22 @@ void editKontak(){
     tampilkanHeader("EDIT KONTAK");
     
     if(jumlahKontak == 0){
-        printf("\nTidak ada kontak yang bisa diedit.\n");
+        printf("\nYahh, ngga ada kontak yang bisa diedit.\n");
         tekanEnter();
         return;
     }
     
     int id;
     while(1){
-        printf("\nMasukkan ID kontak yang akan diedit (1-%d): ", jumlahKontak);
+        printf("\nTolong masukin ID kontak yang mau diedit yaa (1-%d): ", jumlahKontak);
         if(scanf("%d", &id) != 1){
             bersihkanBuffer();
-            printf("Input tidak valid! Masukkan angka ID.\n");
+            printf("Yahh, Input nya ngga valid! Masukkan angka ID.\n");
             continue;
         }
         bersihkanBuffer();
         if(id < 1 || id > jumlahKontak){
-            printf("ID tidak valid! Silakan coba lagi.\n");
+            printf("Yahh, ID nya ngga valid! Silakan coba lagi.\n");
             continue;
         }
         break;
@@ -318,19 +318,19 @@ void editKontak(){
         cetakGarisTipis();
         printf("Mengedit kontak: %s\n", namaKontak[index]);
         cetakGarisTipis();
-        printf("Pilih data yang ingin diedit:\n");
+        printf("Pilih data yang mau kamu edit yaa:\n");
         printf("  1. Nama\n");
         printf("  2. Nomor Telepon\n");
         printf("  3. Email\n");
         printf("  4. Kelompok\n");
         printf("  5. Selesai / Kembali\n");
         cetakGarisTipis();
-        printf("Masukkan pilihan (1-5): ");
+        printf("Masukkan pilihan kamu yaa (1-5): ");
         
         int pilihan;
         if(scanf("%d", &pilihan) != 1){
             bersihkanBuffer();
-            printf("\nPilihan tidak valid! Masukkan angka 1-5.\n");
+            printf("\nYahh, Pilihan kamu ngga valid! Masukkan angka 1-5.\n");
             continue;
         }
         bersihkanBuffer();
@@ -341,7 +341,7 @@ void editKontak(){
                 scanf(" %[^\n]", namaKontak[index]);
                 bersihkanBuffer();
                 if(!validasiNama(namaKontak[index])){
-                    printf("Nama tidak valid! Silakan coba lagi.\n");
+                    printf("Yahh, Nama nya ngga valid! Silakan coba lagi.\n");
                     continue;
                 }
                 char log[100];
@@ -357,28 +357,28 @@ void editKontak(){
                 scanf(" %[^\n]", nomorTelepon[index]);
                 bersihkanBuffer();
                 if(!validasiNomorTelepon(nomorTelepon[index])){
-                    printf("Nomor telepon tidak valid! Silakan coba lagi.\n");
+                    printf("Yahh, nomor telepon nya ngga valid! Silakan coba lagi.\n");
                     continue;
                 }
                 char log[100];
                 sprintf(log, "Edit kontak: %s -> nomor menjadi %s", namaKontak[index], nomorTelepon[index]);
                 tambahRiwayat(log);
-                printf("\nNomor berhasil diubah.\n");
+                printf("\nNomor sudah berhasil diubah yaa.\n");
                 break;
             }
         } else if(pilihan == 3){
             while(1){
-                printf("Email Baru (@gmail.com): ");
+                printf("Email Baru : ");
                 scanf(" %[^\n]", emailKontak[index]);
                 bersihkanBuffer();
                 if(strstr(emailKontak[index], "@gmail.com") == NULL){
-                    printf("Email tidak valid! Silakan coba lagi.\n");
+                    printf("Yahh, Email nya ngga valid! Silakan coba lagi.\n");
                     continue;
                 }
                 char log[100];
                 sprintf(log, "Edit kontak: %s -> email menjadi %s", namaKontak[index], emailKontak[index]);
                 tambahRiwayat(log);
-                printf("\nEmail berhasil diubah.\n");
+                printf("\nYeyy, Email nya udah berhasil diubah yaa.\n");
                 break;
             }
         } else if(pilihan == 4){
@@ -391,21 +391,21 @@ void editKontak(){
                    strcmp(kelompokKontak[index], "Kerja") != 0 &&
                    strcmp(kelompokKontak[index], "Lainnya") != 0){
                     
-                    printf("Kelompok tidak valid! Silakan coba lagi.\n");
+                    printf("Yahh, Kelompok nya ngga valid! Silakan coba lagi.\n");
                     continue;
                 }
                 char log[100];
                 sprintf(log, "Edit kontak: %s -> kelompok menjadi %s", namaKontak[index], kelompokKontak[index]);
                 tambahRiwayat(log);
-                printf("\nKelompok berhasil diubah.\n");
+                printf("\nYeyy, Kelompok udah berhasil diubah yaa.\n");
                 break;
             }
         } else if(pilihan == 5){
-            printf("\nSelesai mengedit kontak.\n");
+            printf("\nUdah siap mengedit kontak.\n");
             tekanEnter();
             return;
         } else {
-            printf("\nPilihan tidak valid! Silakan pilih 1-5.\n");
+            printf("\nYahh, Pilihan kamu ngga valid! Silakan pilih 1-5.\n");
         }
     }
 }
@@ -414,22 +414,22 @@ void hapusKontak(){
     tampilkanHeader("HAPUS KONTAK");
     
     if(jumlahKontak == 0){
-        printf("\nTidak ada kontak yang bisa dihapus.\n");
+        printf("\nYahh, ngga ada kontak yang bisa dihapus.\n");
         tekanEnter();
         return;
     }
     
     int id;
     while(1){
-        printf("\nMasukkan ID kontak yang akan dihapus (1-%d): ", jumlahKontak);
+        printf("\nMasukkan ID kontak yang mau dihapus yaa (1-%d): ", jumlahKontak);
         if(scanf("%d", &id) != 1){
             bersihkanBuffer();
-            printf("Input tidak valid! Masukkan angka ID.\n");
+            printf("Yahh, input nya ngga valid! Masukkan angka ID.\n");
             continue;
         }
         bersihkanBuffer();
         if(id < 1 || id > jumlahKontak){
-            printf("ID tidak valid! Silakan coba lagi.\n");
+            printf("Yahh, ID nya ngga valid! Silakan coba lagi.\n");
             continue;
         }
         break;
@@ -452,7 +452,7 @@ void hapusKontak(){
         if(konfirmasi == 'y' || konfirmasi == 'Y' || konfirmasi == 'n' || konfirmasi == 'N'){
             break;
         }
-        printf("Pilihan tidak valid! Masukkan 'y' atau 'n'.\n");
+        printf("Yahh, Pilihan kamu ngga valid! Masukkan 'y' atau 'n' yaa\n");
     }
     
     if(konfirmasi == 'y' || konfirmasi == 'Y'){
@@ -468,9 +468,9 @@ void hapusKontak(){
             favoritKontak[i] = favoritKontak[i + 1];
         }
         jumlahKontak--;
-        printf("\nKontak berhasil dihapus!\n");
+        printf("\nYeyy, Kontak berhasil dihapus!\n");
     } else {
-        printf("\nPenghapusan dibatalkan.\n");
+        printf("\nYeyy, Penghapusan dibatalkan.\n");
     }
     
     tekanEnter();
@@ -480,7 +480,7 @@ void tandaiFavorit(){
     tampilkanHeader("KELOLA FAVORIT");
     
     if(jumlahKontak == 0){
-        printf("\nTidak ada kontak yang tersedia.\n");
+        printf("\nYahh, ngga ada kontak yang tersedia nihh\n");
         tekanEnter();
         return;
     }
@@ -490,12 +490,12 @@ void tandaiFavorit(){
         printf("\nMasukkan ID kontak (1-%d): ", jumlahKontak);
         if(scanf("%d", &id) != 1){
             bersihkanBuffer();
-            printf("Input tidak valid! Masukkan angka ID.\n");
+            printf("Yahh, Input kamu ngga valid! Masukkan angka ID.\n");
             continue;
         }
         bersihkanBuffer();
         if(id < 1 || id > jumlahKontak){
-            printf("ID tidak valid! Silakan coba lagi.\n");
+            printf("Yahh, ID nya ngga valid! Silakan coba lagi.\n");
             continue;
         }
         break;
@@ -505,7 +505,7 @@ void tandaiFavorit(){
     
     if(favoritKontak[index] == 0){
         favoritKontak[index] = 1;
-        printf("\nKontak '%s' ditandai sebagai favorit!\n", namaKontak[index]);
+        printf("\nYeyy, Kontak '%s' ditandai sebagai favorit!\n", namaKontak[index]);
         
         char log[100];
         sprintf(log, "Tandai favorit: %s", namaKontak[index]);
@@ -513,22 +513,22 @@ void tandaiFavorit(){
     } else {
         char konfirmasi;
         while(1){
-            printf("\nKontak '%s' sudah favorit. Hapus dari favorit? (y/n): ", namaKontak[index]);
+            printf("\nKontak '%s' sudah masuk favorit nih. Mau hapus dari favorit kah? (y/n): ", namaKontak[index]);
             scanf(" %c", &konfirmasi);
             bersihkanBuffer();
             if(konfirmasi == 'y' || konfirmasi == 'Y' || konfirmasi == 'n' || konfirmasi == 'N'){
                 break;
             }
-            printf("Pilihan tidak valid! Masukkan 'y' atau 'n'.\n");
+            printf("Yahh, Pilihan kamu ngga valid! Masukkan 'y' atau 'n'.\n");
         }
         if(konfirmasi == 'y' || konfirmasi == 'Y'){
             favoritKontak[index] = 0;
-            printf("\nKontak '%s' dihapus dari favorit!\n", namaKontak[index]);
+            printf("\nYeyy, Kontak '%s' dihapus dari favorit!\n", namaKontak[index]);
             char log[100];
             sprintf(log, "Hapus favorit: %s", namaKontak[index]);
             tambahRiwayat(log);
         } else {
-            printf("\nOperasi batal. Kontak tetap favorit.\n");
+            printf("\nYeyy, Operasi batal. Kontak tetap di favorit yaa.\n");
         }
     }
     
@@ -567,7 +567,7 @@ void statistikKontak(){
     tampilkanHeader("STATISTIK KONTAK");
     
     if(jumlahKontak == 0){
-        printf("\nTidak ada data untuk ditampilkan.\n");
+        printf("\nYahh, ngga ada data yang bisa ditampilin, karna data kamu kosong\n");
         tekanEnter();
         return;
     }
@@ -620,7 +620,7 @@ void urutkanKontak(){
     tampilkanHeader("URUTKAN KONTAK");
     
     if(jumlahKontak == 0){
-        printf("\nTidak ada kontak untuk diurutkan.\n");
+        printf("\nYahh, ngga ada kontak yang mau diurutin\n");
         tekanEnter();
         return;
     }
@@ -631,15 +631,15 @@ void urutkanKontak(){
         printf("  1. Berdasarkan Nama (A-Z)\n");
         printf("  2. Berdasarkan Kelompok\n");
         cetakGarisTipis();
-        printf("Masukkan pilihan Anda: ");
+        printf("Masukkan pilihan kamu yaa: ");
         if(scanf("%d", &pilihan) != 1){
             bersihkanBuffer();
-            printf("Pilihan tidak valid! Masukkan angka 1 atau 2.\n");
+            printf("Yahh, Pilihan ngga valid! Masukkan angka 1 atau 2 yaa\n");
             continue;
         }
         bersihkanBuffer();
         if(pilihan != 1 && pilihan != 2){
-            printf("Pilihan tidak valid! Masukkan 1 atau 2.\n");
+            printf("Yahh, Pilihan ngga valid! Masukkan angka 1 atau 2 yaa\n");
             continue;
         }
         break;
@@ -672,7 +672,7 @@ void urutkanKontak(){
                 }
             }
         }
-        printf("\nKontak berhasil diurutkan berdasarkan nama!\n");
+        printf("\nYeyy, Kontak udah berhasil diurutin berdasarkan nama yaa!\n");
         tambahRiwayat("Urutkan kontak berdasarkan nama");
         
     } else {
@@ -702,7 +702,7 @@ void urutkanKontak(){
                 }
             }
         }
-        printf("\nKontak berhasil diurutkan berdasarkan kelompok!\n");
+        printf("\nYeyy Kontak udah berhasil diurutin berdasarkan kelompok yaa!\n");
         tambahRiwayat("Urutkan kontak berdasarkan kelompok");
     }
     
@@ -713,7 +713,7 @@ void tampilkanRiwayat(){
     tampilkanHeader("RIWAYAT PERUBAHAN");
     
     if(jumlahRiwayat == 0){
-        printf("\nBelum ada aktivitas yang tercatat.\n");
+        printf("\nYahh, Belum ada aktivitas yang tercatat nih\n");
         tekanEnter();
         return;
     }
@@ -737,7 +737,7 @@ void simpanKeFile(){
     FILE *file = fopen("data_kontak.txt", "w");
     
     if(file == NULL){
-        printf("\nGagal membuka file!\n");
+        printf("\nYahh, Gagal membuka file!\n");
         tekanEnter();
         return;
     }
@@ -764,7 +764,7 @@ void simpanKeFile(){
         fclose(fileRiwayat);
     }
     
-    printf("\nData berhasil disimpan ke file!\n");
+    printf("\nDYeyy, data udah berhasil disimpan ke file yaa!\n");
     tambahRiwayat("Simpan data ke file");
     tekanEnter();
 }
@@ -814,7 +814,7 @@ void exportKeFileTeks(){
     FILE *file = fopen("export_kontak.txt", "w");
 
     if(file == NULL){
-        printf("\nGagal membuat file!\n");
+        printf("\nYahh, gagal membuat file!\n");
         tekanEnter();
         return;
     }
@@ -824,7 +824,7 @@ void exportKeFileTeks(){
         for(int i = 0; i < LEBAR; i++) fprintf(file, "=");
         fprintf(file, "\nTotal: 0 kontak\n\n");
         fclose(file);
-        printf("\nFile export kosong berhasil dibuat (0 kontak)\n");
+        printf("\nYeyy, File export kosong udah berhasil dibuat yaa (0 kontak)\n");
         tekanEnter();
         return;
     }
@@ -849,7 +849,7 @@ void exportKeFileTeks(){
     }
 
     fclose(file);
-    printf("\nData berhasil di-export ke 'export_kontak.txt'\n");
+    printf("\nYeyy, data budah erhasil di-export ke 'export_kontak.txt' yaa\n");
     tambahRiwayat("Export data ke file teks");
     tekanEnter();
 }
@@ -858,7 +858,7 @@ void deteksiDuplikat(){
     tampilkanHeader("DETEKSI DUPLIKAT");
     
     if(jumlahKontak == 0){
-        printf("\nTidak ada data untuk dianalisis.\n");
+        printf("\nYahh, ngga ada data yang mau dianalisis.\n");
         tekanEnter();
         return;
     }
@@ -870,7 +870,7 @@ void deteksiDuplikat(){
             if(strcmp(namaKontak[i], namaKontak[j]) == 0 || 
                strcmp(nomorTelepon[i], nomorTelepon[j]) == 0){
                 
-                printf("\nDuplikat ditemukan:\n");
+                printf("\nYeyy, Duplikat ditemukan:\n");
                 printf("  Kontak %d: %s (%s)\n", i+1, namaKontak[i], nomorTelepon[i]);
                 printf("  Kontak %d: %s (%s)\n", j+1, namaKontak[j], nomorTelepon[j]);
                 adaDuplikat = 1;
@@ -879,7 +879,7 @@ void deteksiDuplikat(){
     }
     
     if(adaDuplikat == 0){
-        printf("\nTidak ada duplikat ditemukan.\n");
+        printf("\nTYahh, ngga ada duplikat ditemukan.\n");
     }
     
     tekanEnter();
@@ -919,8 +919,8 @@ int tampilkanMenu(){
 int main(){
     printf("\n");
     cetakGaris();
-    cetakTengah("SISTEM MANAJEMEN KONTAK v2.0");
-    cetakTengah("Kelola Kontak Anda dengan Mudah");
+    cetakTengah("SISTEM MANAJEMEN KONTAK");
+    cetakTengah("Kami Membantu Mengelola Kontak Anda dengan Mudah");
     cetakGaris();
     
     bacaDariFile();
@@ -959,16 +959,17 @@ int main(){
         } else if(pilihan == 0){
             printf("\n");
             cetakGarisTipis();
-            cetakTengah("Terima kasih telah menggunakan");
-            cetakTengah("Sistem Manajemen Kontak!");
+            cetakTengah("Terima kasih yaa udah menggunakan");
+            cetakTengah("Sistem Manajemen Kontak Kami, See You!");
             cetakGarisTipis();
             printf("\n");
             break;
         } else {
-            printf("\nPilihan tidak valid! Silakan pilih 0-13.\n");
+            printf("\nYahh, Pilihan kamu ngga valid! Silakan pilih 0-13 yaa\n");
             tekanEnter();
         }
     }
     
     return 0;
 }
+
