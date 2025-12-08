@@ -99,7 +99,7 @@ int validasiNama(char nama[]){
 }
 
 void tekanEnter(){
-    printf("\nKlik Enter untuk melanjutkan");
+    printf("\nKlik Enter yaa untuk kembali");
     while(getchar() != '\n');
 }
 
@@ -972,4 +972,5 @@ int main(){
     
     return 0;
 }
+
 
