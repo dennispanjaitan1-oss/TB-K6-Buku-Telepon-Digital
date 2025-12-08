@@ -363,7 +363,7 @@ void editKontak(){
                 char log[100];
                 sprintf(log, "Edit kontak: %s -> nomor menjadi %s", namaKontak[index], nomorTelepon[index]);
                 tambahRiwayat(log);
-                printf("\nNomor sudah berhasil diubah yaa.\n");
+                printf("\nNomor nya udah berhasil diubah yaa.\n");
                 break;
             }
         } else if(pilihan == 3){
@@ -567,7 +567,7 @@ void statistikKontak(){
     tampilkanHeader("STATISTIK KONTAK");
     
     if(jumlahKontak == 0){
-        printf("\nYahh, ngga ada data yang bisa ditampilin, karna data kamu kosong\n");
+        printf("\nYahh, ngga ada data yang bisa ditampilin, karena data kamu kosong\n");
         tekanEnter();
         return;
     }
@@ -850,7 +850,7 @@ void exportKeFileTeks(){
     }
 
     fclose(file);
-    printf("\nYeyy, data budah erhasil di-export ke 'export_kontak.txt' yaa\n");
+    printf("\nYeyy, data sudah berhasil di-export ke 'export_kontak.txt' yaa\n");
     tambahRiwayat("Export data ke file teks");
     tekanEnter();
 }
@@ -880,7 +880,7 @@ void deteksiDuplikat(){
     }
     
     if(adaDuplikat == 0){
-        printf("\nTYahh, ngga ada duplikat ditemukan.\n");
+        printf("\nYahh, ngga ada duplikat ditemukan.\n");
     }
     
     tekanEnter();
@@ -973,6 +973,7 @@ int main(){
     
     return 0;
 }
+
 
 
 
