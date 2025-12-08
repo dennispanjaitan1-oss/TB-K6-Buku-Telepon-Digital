@@ -88,6 +88,7 @@ int validasiNomorTelepon(char nohp[]){
     return 1; 
 }
 
+
 int validasiNama(char nama[]){
     if(strlen(nama) == 0) return 0;
     for(int i = 0; i < (int)strlen(nama); i++){
@@ -535,6 +536,7 @@ void tandaiFavorit(){
     tekanEnter();
 }
 
+
 void tampilkanFavorit(){
     tampilkanHeader("KONTAK FAVORIT");
     
@@ -886,6 +888,7 @@ void deteksiDuplikat(){
     tekanEnter();
 }
 
+
 int tampilkanMenu(){
     int pilihan;
     
@@ -973,3 +976,9 @@ int main(){
     
     return 0;
 }
+
+
+
+
+
+
