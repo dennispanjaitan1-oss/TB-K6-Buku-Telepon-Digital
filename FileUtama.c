@@ -298,7 +298,106 @@ void editKontak(){
         printf("\nMasukkan ID kontak yang akan diedit (1-%d): ", jumlahKontak);
         if(scanf("%d", &id) != 1){
             bersihkanBuffer();
-
+            printf("Input tidak valid! Masukkan angka ID.\n");
+            continue;
+        }
+        bersihkanBuffer();
+        if(id < 1 || id > jumlahKontak){
+            printf("ID tidak valid! Silakan coba lagi.\n");
+            continue;
+        }
+        break;
+    }
+    
+    int index = id - 1;
+    char namaLama[50];
+    strcpy(namaLama, namaKontak[index]);
+    
+    while(1){
+        printf("\n");
+        cetakGarisTipis();
+        printf("Mengedit kontak: %s\n", namaKontak[index]);
+        cetakGarisTipis();
+        printf("Pilih data yang ingin diedit:\n");
+        printf("  1. Nama\n");
+        printf("  2. Nomor Telepon\n");
+        printf("  3. Email\n");
+        printf("  4. Kelompok\n");
+        printf("  5. Selesai / Kembali\n");
+        cetakGarisTipis();
+        printf("Masukkan pilihan (1-5): ");
+        
+        int pilihan;
+        if(scanf("%d", &pilihan) != 1){
+            bersihkanBuffer();
+            printf("\nPilihan tidak valid! Masukkan angka 1-5.\n");
+            continue;
+        }
+        bersihkanBuffer();
+        
+        if(pilihan == 1){
+            while(1){
+                printf("Nama Baru: ");
+                scanf(" %[^\n]", namaKontak[index]);
+                bersihkanBuffer();
+                if(!validasiNama(namaKontak[index])){
+                    printf("Nama tidak valid! Silakan coba lagi.\n");
+                    continue;
+                }
+                char log[100];
+                sprintf(log, "Edit kontak: %s -> nama menjadi %s", namaLama, namaKontak[index]);
+                tambahRiwayat(log);
+                strcpy(namaLama, namaKontak[index]);
+                printf("\nNama berhasil diubah.\n");
+                break;
+            }
+        } else if(pilihan == 2){
+            while(1){
+                printf("Nomor Telepon Baru: ");
+                scanf(" %[^\n]", nomorTelepon[index]);
+                bersihkanBuffer();
+                if(!validasiNomorTelepon(nomorTelepon[index])){
+                    printf("Nomor telepon tidak valid! Silakan coba lagi.\n");
+                    continue;
+                }
+                char log[100];
+                sprintf(log, "Edit kontak: %s -> nomor menjadi %s", namaKontak[index], nomorTelepon[index]);
+                tambahRiwayat(log);
+                printf("\nNomor berhasil diubah.\n");
+                break;
+            }
+        } else if(pilihan == 3){
+            while(1){
+                printf("Email Baru (@gmail.com): ");
+                scanf(" %[^\n]", emailKontak[index]);
+                bersihkanBuffer();
+                if(strstr(emailKontak[index], "@gmail.com") == NULL){
+                    printf("Email tidak valid! Silakan coba lagi.\n");
+                    continue;
+                }
+                char log[100];
+                sprintf(log, "Edit kontak: %s -> email menjadi %s", namaKontak[index], emailKontak[index]);
+                tambahRiwayat(log);
+                printf("\nEmail berhasil diubah.\n");
+                break;
+            }
+        } else if(pilihan == 4){
+            while(1){
+                printf("Kelompok Baru (Keluarga/Teman/Kerja/Lainnya): ");
+                scanf(" %[^\n]", kelompokKontak[index]);
+                bersihkanBuffer();
+                if(strcmp(kelompokKontak[index], "Keluarga") != 0 &&
+                   strcmp(kelompokKontak[index], "Teman") != 0 &&
+                   strcmp(kelompokKontak[index], "Kerja") != 0 &&
+                   strcmp(kelompokKontak[index], "Lainnya") != 0){
+                    
+                    printf("Kelompok tidak valid! Silakan coba lagi.\n");
+                    continue;
+                }
+                char log[100];
+                sprintf(log, "Edit kontak: %s -> kelompok menjadi %s", namaKontak[index], kelompokKontak[index]);
+                tambahRiwayat(log);
+                printf("\nKelompok berhasil diubah.\n");
 
 
             
@@ -579,6 +678,7 @@ int main(){
     
     return 0;
 }
+
 
 
 
