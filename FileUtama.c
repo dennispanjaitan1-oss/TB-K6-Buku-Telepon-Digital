@@ -4,7 +4,7 @@
 #include <time.h>
 #include <ctype.h>
 
-#define LEBAR 80
+#define LEBAR 80 
 
 char namaKontak[100][50];
 char nomorTelepon[100][15];
@@ -973,6 +973,7 @@ int main(){
     
     return 0;
 }
+
 
 
 
