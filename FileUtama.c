@@ -198,7 +198,106 @@ void tampilkanSemuaKontak(){
         cetakGarisTipis();
         char header[100];
         sprintf(header, "Kontak #%d", i+1);
+        cetakTengah(header);
+        cetakGarisTipis();
+        printf("  Nama      : %s", namaKontak[i]);
+        if(favoritKontak[i] == 1){
+            printf(" [FAVORIT]");
+        }
+        printf("\n");
+        printf("  Telepon   : %s\n", nomorTelepon[i]);
+        printf("  Email     : %s\n", emailKontak[i]);
+        printf("  Kelompok  : %s\n", kelompokKontak[i]);
+    }
+    
+    tampilkanFooter();
+    tekanEnter();
+}
 
+void cariKontak(){
+    tampilkanHeader("CARI KONTAK");
+    
+    if(jumlahKontak == 0){
+        printf("\nTidak ada kontak yang bisa dicari.\n");
+        tekanEnter();
+        return;
+    }
+    
+    while(1){
+        char katakunci[50];
+        printf("\nMasukkan nama yang dicari: ");
+        if(fgets(katakunci, sizeof(katakunci), stdin) == NULL){
+            continue;
+        }
+        katakunci[strcspn(katakunci, "\n")] = 0;
+        
+        if(strlen(katakunci) == 0){
+            printf("Nama tidak boleh kosong. Silakan coba lagi.\n");
+            continue;
+        }
+        
+        char kataLower[100];
+        toLowerStr(katakunci, kataLower);
+        
+        int ditemukan = 0;
+        for(int i = 0; i < jumlahKontak; i++){
+            char namaLower[100];
+            toLowerStr(namaKontak[i], namaLower);
+            if(strstr(namaLower, kataLower) != NULL){
+                if(!ditemukan){
+                    printf("\n");
+                    cetakGarisTipis();
+                    cetakTengah("HASIL PENCARIAN");
+                    cetakGarisTipis();
+                }
+                printf("\n");
+                printf("  ID        : %d\n", i+1);
+                printf("  Nama      : %s", namaKontak[i]);
+                if(favoritKontak[i] == 1){
+                    printf(" [FAVORIT]");
+                }
+                printf("\n");
+                printf("  Telepon   : %s\n", nomorTelepon[i]);
+                printf("  Email     : %s\n", emailKontak[i]);
+                printf("  Kelompok  : %s\n", kelompokKontak[i]);
+                cetakGarisTipis();
+                ditemukan = 1;
+            }
+        }
+        
+        if(!ditemukan){
+            printf("\nTidak ada kontak yang cocok dengan '%s'.\n", katakunci);
+            printf("Cari lagi? (y/n): ");
+            char pilihan[10];
+            if(fgets(pilihan, sizeof(pilihan), stdin) == NULL){
+                return;
+            }
+            if(pilihan[0] == 'y' || pilihan[0] == 'Y'){
+                continue;
+            } else {
+                return;
+            }
+        } else {
+            tekanEnter();
+            return;
+        }
+    }
+}
+
+void editKontak(){
+    tampilkanHeader("EDIT KONTAK");
+    
+    if(jumlahKontak == 0){
+        printf("\nTidak ada kontak yang bisa diedit.\n");
+        tekanEnter();
+        return;
+    }
+    
+    int id;
+    while(1){
+        printf("\nMasukkan ID kontak yang akan diedit (1-%d): ", jumlahKontak);
+        if(scanf("%d", &id) != 1){
+            bersihkanBuffer();
 
 
 
@@ -480,6 +579,7 @@ int main(){
     
     return 0;
 }
+
 
 
 
