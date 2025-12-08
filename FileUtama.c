@@ -1,15 +1,86 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
+#include <ctype.h>
+
+#define LEBAR 80
 
 char namaKontak[100][50];
 char nomorTelepon[100][15];
 char emailKontak[100][50];
 char kelompokKontak[100][30];
+int favoritKontak[100];
 int jumlahKontak = 0;
 
+char riwayatAksi[500][100];
+char riwayatWaktu[500][30];
+int jumlahRiwayat = 0;
+
+void cetakGaris(){
+    for(int i = 0; i < LEBAR; i++){
+        printf("=");
+    }
+    printf("\n");
+}
+
+void cetakGarisTipis(){
+    for(int i = 0; i < LEBAR; i++){
+        printf("-");
+    }
+    printf("\n");
+}
+
+void cetakTengah(const char *teks){
+    int panjang = strlen(teks);
+    int spasi = (LEBAR - panjang) / 2;
+    for(int i = 0; i < spasi; i++){
+        printf(" ");
+    }
+    printf("%s\n", teks);
+}
+
+void tampilkanHeader(const char *judul){
+    printf("\n");
+    cetakGaris();
+    cetakTengah(judul);
+    cetakGaris();
+}
+
+void tampilkanFooter(){
+    int jumlahFavorit = 0;
+    for(int i = 0; i < jumlahKontak; i++){
+        if(favoritKontak[i] == 1){
+            jumlahFavorit++;
+        }
+    }
+    
+    printf("\n");
+    cetakGaris();
+    char info[100];
+    sprintf(info, "Total Kontak: %d | Favorit: %d", jumlahKontak, jumlahFavorit);
+    cetakTengah(info);
+    cetakGaris();
+}
+
+void tambahRiwayat(char aksi[]){
+    if(jumlahRiwayat >= 500){
+        return;
+    }
+    
+    time_t waktuSekarang;
+    struct tm *infoWaktu;
+    time(&waktuSekarang);
+    infoWaktu = localtime(&waktuSekarang);
+    
+    strcpy(riwayatAksi[jumlahRiwayat], aksi);
+    strftime(riwayatWaktu[jumlahRiwayat], 30, "%d-%m-%Y %H:%M:%S", infoWaktu);
+    jumlahRiwayat++;
+}
+
 int validasiNomorTelepon(char nohp[]){
-    for(int i = 0; i < strlen(nohp); i++){
+    if(strlen(nohp) == 0) return 0;
+    for(int i = 0; i < (int)strlen(nohp); i++){
         if(nohp[i] < '0' || nohp[i] > '9'){
             return 0; 
         }
@@ -17,87 +88,22 @@ int validasiNomorTelepon(char nohp[]){
     return 1; 
 }
 
-
-void tambahKontak(){
-    if(jumlahKontak >= 100){
-        printf("Database kontak penuh!\n");
-        return;
+int validasiNama(char nama[]){
+    if(strlen(nama) == 0) return 0;
+    for(int i = 0; i < (int)strlen(nama); i++){
+        if(!isalpha((unsigned char)nama[i]) && nama[i] != ' '){
+            return 0;
+        }
     }
-    
-    printf("\n=== TAMBAH KONTAK BARU ===\n");
-    printf("Nama: ");
-    scanf(" %[^\n]", namaKontak[jumlahKontak]);
-    
-    printf("Nomor Telepon: ");
-    scanf(" %[^\n]", nomorTelepon[jumlahKontak]);
-
-    if(!validasiNomorTelepon(nomorTelepon[jumlahKontak])){
-        printf("Nomor telepon hanya boleh berisi angka!\n");
-        printf("Data gagal ditambahkan!\n");
-        return;
-    }
-
-    printf("Email (....@gmail.com): ");
-    scanf(" %[^\n]", emailKontak[jumlahKontak]);
-    
-    if(strstr(emailKontak[jumlahKontak], "@gmail.com") == NULL){
-        printf("Email harus menggunakan @gmail.com\n");
-        printf("Data gagal ditambahkan!\n");
-        return;
-    }
-
-    printf("Kelompok (Keluarga/Teman/Kerja/Lainnya): ");
-    scanf(" %[^\n]", kelompokKontak[jumlahKontak]);
-
-    if(strcmp(kelompokKontak[jumlahKontak], "Keluarga") != 0 &&
-       strcmp(kelompokKontak[jumlahKontak], "Teman") != 0 &&
-       strcmp(kelompokKontak[jumlahKontak], "Kerja") != 0 &&
-       strcmp(kelompokKontak[jumlahKontak], "Lainnya") != 0){
-        
-        printf("Kelompok harus sesuai pilihan: Keluarga / Teman / Kerja / Lainnya\n");
-        printf("Data gagal ditambahkan!\n");
-        return;
-    }
-    
-    jumlahKontak++;
-    printf("\nKontak berhasil ditambahkan!\n");
+    return 1;
 }
 
-void tampilkanSemuaKontak(){
-    printf("\n=== DAFTAR SEMUA KONTAK ===\n");
-    
-    if(jumlahKontak == 0){
-        printf("Tidak ada kontak yang tersimpan.\n");
-        return;
-    }
-    
-    for(int i = 0; i < jumlahKontak; i++){
-        printf("\n--- Kontak #%d ---\n", i+1);
-        printf("Nama: %s\n", namaKontak[i]);
-        printf("Telepon: %s\n", nomorTelepon[i]);
-        printf("Email: %s\n", emailKontak[i]);
-        printf("Kelompok: %s\n", kelompokKontak[i]);
-    }
-    
-    printf("\nTotal: %d kontak\n", jumlahKontak);
-}
 
-void cariKontak(){
-    printf("\n=== CARI KONTAK ===\n");
-    
-    if(jumlahKontak == 0){
-        printf("Tidak ada kontak yang bisa dicari.\n");
-        return;
-    }
-    
-    char katakunci[50];
-    printf("Masukkan nama yang dicari: ");
-    scanf(" %[^\n]", katakunci);
-    
-    int ditemukan = 0;
-    for(int i = 0; i < jumlahKontak; i++){
-        if(strstr(namaKontak[i], katakunci) != NULL){
-            printf("\nKontak ditemukan:\n");
+
+
+
+
+            
             printf("ID: %d\n", i+1);
             printf("Nama: %s\n", namaKontak[i]);
             printf("Telepon: %s\n", nomorTelepon[i]);
@@ -375,6 +381,7 @@ int main(){
     
     return 0;
 }
+
 
 
 
