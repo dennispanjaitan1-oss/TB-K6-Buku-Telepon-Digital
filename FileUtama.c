@@ -599,117 +599,146 @@ void statistikKontak(){
     sprintf(total, "Total Kontak: %d", jumlahKontak);
     cetakTengah(total);   
 
-            
-            printf("ID: %d\n", i+1);
-            printf("Nama: %s\n", namaKontak[i]);
-            printf("Telepon: %s\n", nomorTelepon[i]);
-            printf("Email: %s\n", emailKontak[i]);
-            printf("Kelompok: %s\n", kelompokKontak[i]);
-            ditemukan = 1;
-        }
-    }
+    printf("\n");
+    cetakTengah("BERDASARKAN KELOMPOK");
+    cetakGarisTipis();
+    printf("  Keluarga  : %d kontak\n", jumlahKeluarga);
+    printf("  Teman     : %d kontak\n", jumlahTeman);
+    printf("  Kerja     : %d kontak\n", jumlahKerja);
+    printf("  Lainnya   : %d kontak\n", jumlahLainnya);
+    cetakGarisTipis();
     
-    if(!ditemukan){
-        printf("Tidak ada kontak yang cocok.\n");
-    }
+    printf("\n");
+    char fav[50];
+    sprintf(fav, "Kontak Favorit: %d", jumlahFavorit);
+    cetakTengah(fav);
+    
+    tekanEnter();
 }
 
-void editKontak(){
-    printf("\n=== EDIT KONTAK ===\n");
+void urutkanKontak(){
+    tampilkanHeader("URUTKAN KONTAK");
     
     if(jumlahKontak == 0){
-        printf("Tidak ada kontak yang bisa diedit.\n");
+        printf("\nTidak ada kontak untuk diurutkan.\n");
+        tekanEnter();
         return;
     }
     
-    int id;
-    printf("Masukkan ID kontak yang akan diedit (1-%d): ", jumlahKontak);
-    scanf("%d", &id);
-    
-    if(id < 1 || id > jumlahKontak){
-        printf("ID tidak valid!\n");
-        return;
+    int pilihan;
+    while(1){
+        printf("\nPilih urutan:\n");
+        printf("  1. Berdasarkan Nama (A-Z)\n");
+        printf("  2. Berdasarkan Kelompok\n");
+        cetakGarisTipis();
+        printf("Masukkan pilihan Anda: ");
+        if(scanf("%d", &pilihan) != 1){
+            bersihkanBuffer();
+            printf("Pilihan tidak valid! Masukkan angka 1 atau 2.\n");
+            continue;
+        }
+        bersihkanBuffer();
+        if(pilihan != 1 && pilihan != 2){
+            printf("Pilihan tidak valid! Masukkan 1 atau 2.\n");
+            continue;
+        }
+        break;
     }
     
-    int index = id - 1;
-    printf("\nMengedit kontak: %s\n", namaKontak[index]);
-    
-    printf("Nama Baru: ");
-    scanf(" %[^\n]", namaKontak[index]);
-
-    printf("Nomor Telepon Baru: ");
-    scanf(" %[^\n]", nomorTelepon[index]);
-
-    if(!validasiNomorTelepon(nomorTelepon[index])){
-        printf("Nomor telepon tidak valid! Edit dibatalkan.\n");
-        return;
-    }
-    
-    printf("Email Baru (@gmail.com): ");
-    scanf(" %[^\n]", emailKontak[index]);
-
-    if(strstr(emailKontak[index], "@gmail.com") == NULL){
-        printf("Email tidak valid! Edit dibatalkan.\n");
-        return;
-    }
-
-    printf("Kelompok Baru (Keluarga/Teman/Kerja/Lainnya): ");
-    scanf(" %[^\n]", kelompokKontak[index]);
-
-    if(strcmp(kelompokKontak[index], "Keluarga") != 0 &&
-       strcmp(kelompokKontak[index], "Teman") != 0 &&
-       strcmp(kelompokKontak[index], "Kerja") != 0 &&
-       strcmp(kelompokKontak[index], "Lainnya") != 0){
+    if(pilihan == 1){
+        for(int i = 0; i < jumlahKontak - 1; i++){
+            for(int j = i + 1; j < jumlahKontak; j++){
+                if(strcmp(namaKontak[i], namaKontak[j]) > 0){
+                    char tempNama[50], tempTelepon[15], tempEmail[50], tempKelompok[30];
+                    int tempFavorit;
+                    
+                    strcpy(tempNama, namaKontak[i]);
+                    strcpy(tempTelepon, nomorTelepon[i]);
+                    strcpy(tempEmail, emailKontak[i]);
+                    strcpy(tempKelompok, kelompokKontak[i]);
+                    tempFavorit = favoritKontak[i];
+                    
+                    strcpy(namaKontak[i], namaKontak[j]);
+                    strcpy(nomorTelepon[i], nomorTelepon[j]);
+                    strcpy(emailKontak[i], emailKontak[j]);
+                    strcpy(kelompokKontak[i], kelompokKontak[j]);
+                    favoritKontak[i] = favoritKontak[j];
+                    
+                    strcpy(namaKontak[j], tempNama);
+                    strcpy(nomorTelepon[j], tempTelepon);
+                    strcpy(emailKontak[j], tempEmail);
+                    strcpy(kelompokKontak[j], tempKelompok);
+                    favoritKontak[j] = tempFavorit;
+                }
+            }
+        }
+        printf("\nKontak berhasil diurutkan berdasarkan nama!\n");
+        tambahRiwayat("Urutkan kontak berdasarkan nama");
         
-        printf("Kelompok tidak valid! Edit dibatalkan.\n");
-        return;
+    } else {
+        for(int i = 0; i < jumlahKontak - 1; i++){
+            for(int j = i + 1; j < jumlahKontak; j++){
+                if(strcmp(kelompokKontak[i], kelompokKontak[j]) > 0){
+                    char tempNama[50], tempTelepon[15], tempEmail[50], tempKelompok[30];
+                    int tempFavorit;
+                    
+                    strcpy(tempNama, namaKontak[i]);
+                    strcpy(tempTelepon, nomorTelepon[i]);
+                    strcpy(tempEmail, emailKontak[i]);
+                    strcpy(tempKelompok, kelompokKontak[i]);
+                    tempFavorit = favoritKontak[i];
+                    
+                    strcpy(namaKontak[i], namaKontak[j]);
+                    strcpy(nomorTelepon[i], nomorTelepon[j]);
+                    strcpy(emailKontak[i], emailKontak[j]);
+                    strcpy(kelompokKontak[i], kelompokKontak[j]);
+                    favoritKontak[i] = favoritKontak[j];
+                    
+                    strcpy(namaKontak[j], tempNama);
+                    strcpy(nomorTelepon[j], tempTelepon);
+                    strcpy(emailKontak[j], tempEmail);
+                    strcpy(kelompokKontak[j], tempKelompok);
+                    favoritKontak[j] = tempFavorit;
+                }
+            }
+        }
+        printf("\nKontak berhasil diurutkan berdasarkan kelompok!\n");
+        tambahRiwayat("Urutkan kontak berdasarkan kelompok");
     }
     
-    printf("\nKontak berhasil diupdate!\n");
+    tekanEnter();
 }
 
-void hapusKontak(){
-    printf("\n=== HAPUS KONTAK ===\n");
+void tampilkanRiwayat(){
+    tampilkanHeader("RIWAYAT PERUBAHAN");
     
-    if(jumlahKontak == 0){
-        printf("Tidak ada kontak yang bisa dihapus.\n");
+    if(jumlahRiwayat == 0){
+        printf("\nBelum ada aktivitas yang tercatat.\n");
+        tekanEnter();
         return;
     }
     
-    int id;
-    printf("Masukkan ID kontak yang akan dihapus (1-%d): ", jumlahKontak);
-    scanf("%d", &id);
+    int batasTampil = jumlahRiwayat > 20 ? 20 : jumlahRiwayat;
     
-    if(id < 1 || id > jumlahKontak){
-        printf("ID tidak valid!\n");
-        return;
+    char info[100];
+    sprintf(info, "Menampilkan %d aktivitas terakhir", batasTampil);
+    printf("\n");
+    cetakTengah(info);
+    printf("\n");
+    
+    for(int i = jumlahRiwayat - 1; i >= jumlahRiwayat - batasTampil; i--){
+        printf("[%s] %s\n", riwayatWaktu[i], riwayatAksi[i]);
     }
     
-    int index = id - 1;
-    printf("Apakah Anda yakin ingin menghapus kontak: %s? (y/n): ", namaKontak[index]);
-    
-    char konfirmasi;
-    scanf(" %c", &konfirmasi);
-    
-    if(konfirmasi == 'y' || konfirmasi == 'Y'){
-        for(int i = index; i < jumlahKontak - 1; i++){
-            strcpy(namaKontak[i], namaKontak[i + 1]);
-            strcpy(nomorTelepon[i], nomorTelepon[i + 1]);
-            strcpy(emailKontak[i], emailKontak[i + 1]);
-            strcpy(kelompokKontak[i], kelompokKontak[i + 1]);
-        }
-        jumlahKontak--;
-        printf("Kontak berhasil dihapus!\n");
-    } else {
-        printf("Penghapusan dibatalkan.\n");
-    }
+    tekanEnter();
 }
 
 void simpanKeFile(){
     FILE *file = fopen("data_kontak.txt", "w");
     
     if(file == NULL){
-        printf("Gagal membuka file!\n");
+        printf("\nGagal membuka file!\n");
+        tekanEnter();
         return;
     }
     
@@ -720,17 +749,30 @@ void simpanKeFile(){
         fprintf(file, "%s\n", nomorTelepon[i]);
         fprintf(file, "%s\n", emailKontak[i]);
         fprintf(file, "%s\n", kelompokKontak[i]);
+        fprintf(file, "%d\n", favoritKontak[i]);
     }
     
     fclose(file);
-    printf("Data berhasil disimpan ke file!\n");
+    
+    FILE *fileRiwayat = fopen("riwayat_kontak.txt", "w");
+    if(fileRiwayat != NULL){
+        fprintf(fileRiwayat, "%d\n", jumlahRiwayat);
+        for(int i = 0; i < jumlahRiwayat; i++){
+            fprintf(fileRiwayat, "%s\n", riwayatAksi[i]);
+            fprintf(fileRiwayat, "%s\n", riwayatWaktu[i]);
+        }
+        fclose(fileRiwayat);
+    }
+    
+    printf("\nData berhasil disimpan ke file!\n");
+    tambahRiwayat("Simpan data ke file");
+    tekanEnter();
 }
 
 void bacaDariFile(){
     FILE *file = fopen("data_kontak.txt", "r");
     
     if(file == NULL){
-        printf("File data tidak ditemukan. Membuat database baru.\n");
         return;
     }
     
@@ -748,50 +790,76 @@ void bacaDariFile(){
         
         fgets(kelompokKontak[i], 30, file);
         kelompokKontak[i][strcspn(kelompokKontak[i], "\n")] = 0;
+        
+        fscanf(file, "%d\n", &favoritKontak[i]);
     }
     
     fclose(file);
-    printf("Data berhasil dimuat dari file! (%d kontak)\n", jumlahKontak);
+    
+    FILE *fileRiwayat = fopen("riwayat_kontak.txt", "r");
+    if(fileRiwayat != NULL){
+        fscanf(fileRiwayat, "%d\n", &jumlahRiwayat);
+        for(int i = 0; i < jumlahRiwayat; i++){
+            fgets(riwayatAksi[i], 100, fileRiwayat);
+            riwayatAksi[i][strcspn(riwayatAksi[i], "\n")] = 0;
+            
+            fgets(riwayatWaktu[i], 30, fileRiwayat);
+            riwayatWaktu[i][strcspn(riwayatWaktu[i], "\n")] = 0;
+        }
+        fclose(fileRiwayat);
+    }
 }
 
 void exportKeFileTeks(){
     FILE *file = fopen("export_kontak.txt", "w");
 
     if(file == NULL){
-        printf("Gagal membuat file!\n");
+        printf("\nGagal membuat file!\n");
+        tekanEnter();
         return;
     }
 
     if(jumlahKontak == 0){
-        fprintf(file, "DAFTAR KONTAK\n=============\nTotal: 0 kontak\n\n");
+        fprintf(file, "DAFTAR KONTAK\n");
+        for(int i = 0; i < LEBAR; i++) fprintf(file, "=");
+        fprintf(file, "\nTotal: 0 kontak\n\n");
         fclose(file);
-        printf("File export kosong berhasil dibuat (0 kontak)\n");
+        printf("\nFile export kosong berhasil dibuat (0 kontak)\n");
+        tekanEnter();
         return;
     }
 
     fprintf(file, "DAFTAR KONTAK\n");
-    fprintf(file, "=============\n");
-    fprintf(file, "Total: %d kontak\n\n", jumlahKontak);
+    for(int i = 0; i < LEBAR; i++) fprintf(file, "=");
+    fprintf(file, "\nTotal: %d kontak\n\n", jumlahKontak);
 
     for(int i = 0; i < jumlahKontak; i++){
         fprintf(file, "Kontak #%d\n", i+1);
-        fprintf(file, "Nama: %s\n", namaKontak[i]);
-        fprintf(file, "Telepon: %s\n", nomorTelepon[i]);
-        fprintf(file, "Email: %s\n", emailKontak[i]);
-        fprintf(file, "Kelompok: %s\n", kelompokKontak[i]);
-        fprintf(file, "------------------------\n");
+        for(int j = 0; j < LEBAR; j++) fprintf(file, "-");
+        fprintf(file, "\n");
+        fprintf(file, "Nama      : %s", namaKontak[i]);
+        if(favoritKontak[i] == 1){
+            fprintf(file, " [FAVORIT]");
+        }
+        fprintf(file, "\n");
+        fprintf(file, "Telepon   : %s\n", nomorTelepon[i]);
+        fprintf(file, "Email     : %s\n", emailKontak[i]);
+        fprintf(file, "Kelompok  : %s\n", kelompokKontak[i]);
+        fprintf(file, "\n");
     }
 
     fclose(file);
-    printf("Data berhasil di-export ke 'export_kontak.txt'\n");
+    printf("\nData berhasil di-export ke 'export_kontak.txt'\n");
+    tambahRiwayat("Export data ke file teks");
+    tekanEnter();
 }
 
-
 void deteksiDuplikat(){
-    printf("\n=== DETEKSI DUPLIKAT ===\n");
+    tampilkanHeader("DETEKSI DUPLIKAT");
     
     if(jumlahKontak == 0){
-        printf("Tidak ada data untuk dianalisis.\n");
+        printf("\nTidak ada data untuk dianalisis.\n");
+        tekanEnter();
         return;
     }
     
@@ -802,41 +870,58 @@ void deteksiDuplikat(){
             if(strcmp(namaKontak[i], namaKontak[j]) == 0 || 
                strcmp(nomorTelepon[i], nomorTelepon[j]) == 0){
                 
-                printf("Duplikat ditemukan:\n");
-                printf("   Kontak %d: %s (%s)\n", i+1, namaKontak[i], nomorTelepon[i]);
-                printf("   Kontak %d: %s (%s)\n", j+1, namaKontak[j], nomorTelepon[j]);
+                printf("\nDuplikat ditemukan:\n");
+                printf("  Kontak %d: %s (%s)\n", i+1, namaKontak[i], nomorTelepon[i]);
+                printf("  Kontak %d: %s (%s)\n", j+1, namaKontak[j], nomorTelepon[j]);
                 adaDuplikat = 1;
             }
         }
     }
     
     if(adaDuplikat == 0){
-        printf("Tidak ada duplikat ditemukan.\n");
+        printf("\nTidak ada duplikat ditemukan.\n");
     }
+    
+    tekanEnter();
 }
 
 int tampilkanMenu(){
     int pilihan;
-    printf("\n=== BUKU TELEPON DIGITAL ===\n");
-    printf("1. Tambah Kontak Baru\n");
-    printf("2. Tampilkan Semua Kontak\n");
-    printf("3. Cari Kontak\n");
-    printf("4. Edit Kontak\n");
-    printf("5. Hapus Kontak\n");
-    printf("6. Simpan Data ke File\n");
-    printf("7. Export ke File Teks\n");
-    printf("8. Deteksi Duplikat\n");
-    printf("0. Keluar\n");
-    printf("Pilih menu (0-8): ");
-    scanf("%d", &pilihan);
+    
+    printf("\n");
+    cetakGaris();
+    cetakTengah("BUKU TELEPON DIGITAL");
+    cetakGaris();
+    printf(" 1.  Tambah Kontak Baru\n");
+    printf(" 2.  Tampilkan Semua Kontak\n");
+    printf(" 3.  Cari Kontak\n");
+    printf(" 4.  Edit Kontak\n");
+    printf(" 5.  Hapus Kontak\n");
+    printf(" 6.  Kelola Favorit\n");
+    printf(" 7.  Tampilkan Kontak Favorit\n");
+    printf(" 8.  Statistik Kontak\n");
+    printf(" 9.  Urutkan Kontak\n");
+    printf(" 10. Riwayat Perubahan\n");
+    printf(" 11. Simpan Data ke File\n");
+    printf(" 12. Export ke File Teks\n");
+    printf(" 13. Deteksi Duplikat\n");
+    printf(" 0.  Keluar\n");
+    cetakGarisTipis();
+    printf("Masukkan pilihan Anda (0-13): ");
+    if(scanf("%d", &pilihan) != 1){
+        bersihkanBuffer();
+        return -1;
+    }
+    bersihkanBuffer();
     return pilihan;
 }
 
-
 int main(){
-    printf("=========================================\n");
-    printf("    SISTEM MANAJEMEN KONTAK v1.0\n");
-    printf("=========================================\n");
+    printf("\n");
+    cetakGaris();
+    cetakTengah("SISTEM MANAJEMEN KONTAK v2.0");
+    cetakTengah("Kelola Kontak Anda dengan Mudah");
+    cetakGaris();
     
     bacaDariFile();
     
@@ -856,42 +941,34 @@ int main(){
         } else if(pilihan == 5){
             hapusKontak();
         } else if(pilihan == 6){
-            simpanKeFile();
+            tandaiFavorit();
         } else if(pilihan == 7){
-            exportKeFileTeks();
+            tampilkanFavorit();
         } else if(pilihan == 8){
+            statistikKontak();
+        } else if(pilihan == 9){
+            urutkanKontak();
+        } else if(pilihan == 10){
+            tampilkanRiwayat();
+        } else if(pilihan == 11){
+            simpanKeFile();
+        } else if(pilihan == 12){
+            exportKeFileTeks();
+        } else if(pilihan == 13){
             deteksiDuplikat();
         } else if(pilihan == 0){
-            printf("\nKeluar tanpa menyimpan otomatis.\n");
-            printf("Terima kasih telah menggunakan Sistem Manajemen Kontak!\n");
-            printf("=========================================\n");
+            printf("\n");
+            cetakGarisTipis();
+            cetakTengah("Terima kasih telah menggunakan");
+            cetakTengah("Sistem Manajemen Kontak!");
+            cetakGarisTipis();
+            printf("\n");
             break;
         } else {
-            printf("Pilihan tidak valid! Silakan pilih 0-8.\n");
+            printf("\nPilihan tidak valid! Silakan pilih 0-13.\n");
+            tekanEnter();
         }
-        
-        printf("\nTekan Enter untuk melanjutkan...");
-        getchar();
-        getchar();
     }
     
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
