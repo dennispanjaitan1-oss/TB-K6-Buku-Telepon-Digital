@@ -764,7 +764,7 @@ void simpanKeFile(){
         fclose(fileRiwayat);
     }
     
-    printf("\nDYeyy, data udah berhasil disimpan ke file yaa!\n");
+    printf("\nYeyy, data udah berhasil disimpan ke file yaa!\n");
     tambahRiwayat("Simpan data ke file");
     tekanEnter();
 }
@@ -972,5 +972,6 @@ int main(){
     
     return 0;
 }
+
 
 
